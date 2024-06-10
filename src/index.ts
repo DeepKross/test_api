@@ -9,7 +9,7 @@ import logger from './config/logger';
 import { errorHandler, successHandler } from './config/morgan';
 import { errorMiddleware } from './middlewares/error.middleware';
 import prisma from './prismaClient';
-import router from './routes';
+import router from './routes/v1';
 
 const app: Express = express();
 
@@ -34,7 +34,7 @@ app.options('*', cors());
 app.use(json());
 
 //all routes are prefixed with /v1
-app.use(router);
+app.use('/api/v1', router);
 
 app.use(errorMiddleware);
 
@@ -44,7 +44,7 @@ let server: Server;
 void prisma.$connect().then(() => {
   console.info('Connected to SQL Database');
   app.listen(port, () => {
-    console.info(`Listening to port http://localhost:${port}`);
+    console.info(`Listening to port http://localhost:${port}/api/v1`);
   });
 });
 

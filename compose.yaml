@@ -2,7 +2,7 @@ services:
   db:
     image: postgres
     restart: always
-    container_name: usd_uah_rate_api_db
+    container_name: test_api_db
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=secret
