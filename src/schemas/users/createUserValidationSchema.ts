@@ -20,12 +20,19 @@ export const createUserValidationSchemas = {
     }
   },
   phone: {
-    isMobilePhone: {
-      errorMessage: 'The phone is invalid.'
-    },
     notEmpty: {
-      errorMessage: 'The phone is required.'
-    }
+      errorMessage: 'Phone number is required',
+    },
+    custom: {
+      options: (value) => {
+        // Ensure the phone number starts with +380
+        const ukrainePhoneRegex = /^\+380\d{9}$/;
+        if (!ukrainePhoneRegex.test(value)) {
+          throw new Error('Phone number must start with +380 and contain 12 digits in total');
+        }
+        return true;
+      },
+    },
   },
   position_id: {
     isInt: {
@@ -35,9 +42,4 @@ export const createUserValidationSchemas = {
       errorMessage: 'The position id is required.'
     }
   },
-  photo: {
-    notEmpty: {
-      errorMessage: 'The photo is required.'
-    }
-  }
 };
