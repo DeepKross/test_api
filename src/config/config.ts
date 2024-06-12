@@ -11,6 +11,7 @@ const envVarsSchema = Joi.object({
   CLOUDINARY_CLOUD_NAME: Joi.string().required(),
   CLOUDINARY_API_KEY: Joi.string().required(),
   CLOUDINARY_API_SECRET: Joi.string().required(),
+  JWT_SECRET: Joi.string().required()
 }).unknown();
 
 type EnvVars = {
@@ -20,6 +21,7 @@ type EnvVars = {
   CLOUDINARY_CLOUD_NAME: string;
   CLOUDINARY_API_KEY: string;
   CLOUDINARY_API_SECRET: string;
+  JWT_SECRET: string;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -41,6 +43,7 @@ interface Config {
   cloudinary_cloud_name: string;
   cloudinary_api_key: string;
   cloudinary_api_secret: string;
+  jwtSecret: string;
 }
 
 const config: Config = {
@@ -50,6 +53,7 @@ const config: Config = {
   cloudinary_cloud_name: validatedEnvVars.CLOUDINARY_CLOUD_NAME,
   cloudinary_api_key: validatedEnvVars.CLOUDINARY_API_KEY,
   cloudinary_api_secret: validatedEnvVars.CLOUDINARY_API_SECRET,
+  jwtSecret: validatedEnvVars.JWT_SECRET
 };
 
 export default config;

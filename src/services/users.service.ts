@@ -69,3 +69,59 @@ export const createNewUser = async (data: CreateNewUser) => {
     throw new APIError(500, 'Error creating new user.');
   }
 };
+
+export const countUsers = async () => {
+  try {
+    const count = await prismaClient.user.count();
+
+    return count;
+  } catch (error) {
+    throw new APIError(500, 'Error counting users.');
+  }
+};
+
+export const getPaginatedUsers = async (count: number, currentPage: number) => {
+  try {
+    const users = await prismaClient.user.findMany({
+      skip: (currentPage - 1) * count,
+      take: count,
+      orderBy: { id: 'asc' },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        phone: true,
+        registration_timestamp: true,
+        photo: true,
+        position: {
+          select: {
+            name: true
+          }
+        }
+      }
+    });
+
+    const transformedUsers = users.map((user) => ({
+      ...user,
+      position: user.position.name
+    }));
+
+    return transformedUsers;
+  } catch (error) {
+    throw new APIError(500, 'Error fetching paginated users.');
+  }
+};
+
+export const getUserPosition = async (positionId: number) => {
+  try {
+    const position = await prismaClient.position.findUnique({
+      where: {
+        id: positionId
+      }
+    });
+
+    return position;
+  } catch (error) {
+    throw new APIError(500, 'Error fetching user position.');
+  }
+};
