@@ -2,7 +2,12 @@ import { Request, Response } from 'express';
 import { matchedData, validationResult } from 'express-validator';
 
 import { uploadFileToCloud } from '../services/file.service';
-import { countUsers, createNewUser, getPaginatedUsers } from '../services/users.service';
+import {
+  countUsers,
+  createNewUser,
+  getPaginatedUsers,
+  getUserById as getUserByIdService
+} from '../services/users.service';
 import catchAsync from '../utils/catchAsync';
 import { formatValidationErrors } from '../utils/handleErrorsDisplay';
 
@@ -72,4 +77,19 @@ export const getAllUsers = catchAsync(async (req: Request, res: Response) => {
   };
 
   res.json(response);
+});
+
+export const getUserById = catchAsync(async (req: Request, res: Response) => {
+  const userId = parseInt(req.params.id);
+
+  const user = await getUserByIdService(userId);
+
+  if (!user) {
+    return res.status(404).send({
+      success: false,
+      message: 'User not found.'
+    });
+  }
+
+  res.json(user);
 });

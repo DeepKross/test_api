@@ -9,6 +9,39 @@ interface CreateNewUser {
   photo: string;
 }
 
+export const getUserById = async (userId: number) => {
+  try {
+    const user = await prismaClient.user.findUnique({
+      where: {
+        id: userId
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        phone: true,
+        photo: true,
+        position: {
+          select: {
+            name: true
+          }
+        }
+      }
+    });
+
+    if (!user) {
+      return null;
+    }
+
+    return {
+      ...user,
+      position: user.position.name
+    };
+  } catch (error) {
+    throw new APIError(500, 'Error fetching user by ID.');
+  }
+};
+
 export const getUserByEmail = async (email: string) => {
   try {
     if (!email) {
