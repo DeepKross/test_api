@@ -2,14 +2,13 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import express, { Express, json, urlencoded } from 'express';
 import { Server } from 'http';
-import favicon from 'serve-favicon';
 
 import config from './config/config';
 import logger from './config/logger';
 import { errorHandler, successHandler } from './config/morgan';
 import { errorMiddleware } from './middlewares/error.middleware';
-import prisma from './prismaClient';
 import router from './routes/v1';
+import prisma from './prismaClient';
 
 const app: Express = express();
 
@@ -21,9 +20,6 @@ if (config.env !== 'test') {
 dotenv.config();
 
 const port = process.env.PORT || 8080;
-//const clientUrl = process.env.CLIENT_URL;
-
-app.use(favicon(__dirname + '/public/favicon.ico'));
 
 app.use(urlencoded({ extended: true }));
 
