@@ -1,11 +1,12 @@
 import { UploadApiResponse, v2 } from 'cloudinary';
+import * as fs from 'node:fs';
 
 import logger from '../config/logger';
 
 v2.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
+  api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
 export const uploadFileToCloud = async (photo: string): Promise<string | null> => {
@@ -19,9 +20,12 @@ export const uploadFileToCloud = async (photo: string): Promise<string | null> =
           fetch_format: 'auto',
           width: 70,
           height: 70,
-          crop: 'fill',
-        },
+          crop: 'fill'
+        }
       });
+
+      //remove file
+      fs.unlinkSync(photo);
 
       return url.url;
     } catch (error) {
@@ -34,4 +38,3 @@ export const uploadFileToCloud = async (photo: string): Promise<string | null> =
     return null; // Return null if photo is null
   }
 };
-
