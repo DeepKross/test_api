@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/index.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "npx tsc",
     "start": "npm run build && node dist/index.js",
     "dev": "nodemon src/index.ts",
     "seed": "ts-node src/seed.ts",
@@ -24,8 +24,6 @@
     "express": "^4.19.2",
     "express-validator": "^7.1.0",
     "http-status": "^1.7.4",
-    "jest-fetch-mock": "^3.0.3",
-    "jest-mock-extended": "^3.0.7",
     "joi": "^17.13.1",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
@@ -44,7 +42,6 @@
     "@types/morgan": "^1.9.9",
     "@types/multer": "^1.4.11",
     "@types/node": "^20.12.12",
-    "@types/node-fetch": "^2.6.11",
     "@types/serve-favicon": "^2.5.7",
     "@types/winston": "^2.4.4",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
@@ -63,7 +60,6 @@
     "prettier": "^3.1.1",
     "prisma": "^5.11.0",
     "rimraf": "^5.0.7",
-    "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.4.3"
